@@ -9,8 +9,6 @@ class PostTag extends Model
 {
     use HasFactory;
 
-    protected $table = 'post_tag';
-
     use SoftDeletes;
 
     protected $fillable = [
