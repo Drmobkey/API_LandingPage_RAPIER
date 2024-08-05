@@ -28,9 +28,13 @@ class DatabaseSeeder extends Seeder
 
        // Membuat Posts dan Menambahkan Tags ke Post
        Posts::factory(20)->create()->each(function ($post) {
-           // Menambahkan 1 hingga 5 tag secara acak ke setiap post
-           $tags = Tags::inRandomOrder()->take(rand(1, 5))->pluck('id');
-           $post->tags()->attach($tags);
+           
+            $user = User::inRandomOrder()->first()->id;
+            $category = Categories::inRandomOrder()->first()->id;
+
+            $post->user_id =$user;
+            $post->category_id=$category;
+            $post->save();
         });
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
