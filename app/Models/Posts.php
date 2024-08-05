@@ -9,4 +9,5 @@ class Posts extends Model
 {
     use HasFactory;
     protected $table = 'posts';
+
 }
