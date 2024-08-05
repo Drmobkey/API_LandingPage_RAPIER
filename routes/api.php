@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\AuthenticationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,6 +19,9 @@ use App\Http\Controllers\PostController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('/login', [AuthenticationController::class, 'login']);
 
 // Untuk user
 Route::get('/posts', [PostController::class,'index']);
