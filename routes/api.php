@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Untuk user
-Route::get('/posts', 'PostController@index');
-Route::get('/posts/{id}', 'PostController@show');
+Route::get('/posts', [PostController::class,'index']);
+Route::get('/posts/{id}', [PostController::class,'show']);
 
 // Untuk admin dengan autentikasi
 Route::middleware('auth:api')->group(function () {
-    Route::post('/admin/posts', 'AdminPostController@store');
-    Route::put('/admin/posts/{id}', 'AdminPostController@update');
-    Route::delete('/admin/posts/{id}', 'AdminPostController@destroy');
+    Route::post('/admin/posts', [AdminPostController::class,'store']);
+    Route::put('/admin/posts/{id}', [AdminPostController::class,'update']);
+    Route::delete('/admin/posts/{id}', [AdminPostController::class,'destroy']);
 });
