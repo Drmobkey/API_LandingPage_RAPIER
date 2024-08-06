@@ -28,8 +28,8 @@ Route::get('/posts', [PostController::class,'index']);
 Route::get('/posts/{id}', [PostController::class,'show']);
 
 // Untuk admin dengan autentikasi
-Route::middleware('auth:api')->group(function () {
-    Route::post('/admin/posts', [AdminPostController::class,'store']);
-    Route::put('/admin/posts/{id}', [AdminPostController::class,'update']);
-    Route::delete('/admin/posts/{id}', [AdminPostController::class,'destroy']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/posts', [AdminPostController::class,'store']);
+    Route::put('/posts/{id}', [AdminPostController::class,'update']);
+    Route::delete('/posts/{id}', [AdminPostController::class,'destroy']);
 });

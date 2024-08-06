@@ -4,25 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PostTag extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
-    use SoftDeletes;
+    protected $fillable = ['post_id','tag_id'];
 
-    protected $fillable = [
-        'title', 'slug', 'content', 'user_id', 'category_id', 'thumbnail', 
-        'published_at', 'status', 'meta_title', 'meta_description'
-    ];
-
-    public function category()
+    public function post()
     {
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Posts::class);
     }
 
-    public function tags()
+    public function tag()
     {
-        return $this->belongsToMany(Tags::class);
+        return $this->belongsTo(Tags::class); 
+
     }
 }
