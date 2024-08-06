@@ -32,7 +32,15 @@ class AdminPostController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:50',
-            'slug' => 'required|string|max:50|unique:posts,slug,' . $post->id,   
+            'slug' => 'required|string|max:50|unique:posts,slug,' . $post->id, 
+            'content' => 'required',
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+            'published_at' => 'date',
+            'status' => 'required|in:published,draft',
+            'meta_title' => 'string|max:50',
+            'meta_description' => 'string|max:50',
 
             // Add more validation rules as needed
         ]);

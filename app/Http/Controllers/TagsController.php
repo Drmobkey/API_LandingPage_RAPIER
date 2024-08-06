@@ -13,7 +13,7 @@ class TagsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:50', 
+            'name' => 'required|string|max:50', 
             'slug' => 'required|string|max:50|unique:posts', 
 
             // Add more validation rules as needed
@@ -32,7 +32,7 @@ class TagsController extends Controller
         $tags = Tags::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
             'slug' => 'required|string|max:50|unique:posts,slug,' . $tags->id,  
 
             // Add more validation rules as needed

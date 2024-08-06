@@ -11,7 +11,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:50', 
+            'name' => 'required|string|max:50', 
             'slug' => 'required|string|max:50|unique:posts', 
 
             // Add more validation rules as needed
@@ -30,7 +30,7 @@ class CategoriesController extends Controller
         $kategori = Categories::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
             'slug' => 'required|string|max:50|unique:posts,slug,' . $kategori->id,  
 
             // Add more validation rules as needed
