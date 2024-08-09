@@ -8,6 +8,25 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
+
+    public function index()
+    {
+        $categories = Categories::all();
+        return response()->json([
+            'data'=> $categories
+        ]);
+    }
+    
+    
+    public function show(string $id)
+    {
+        $categories = Categories::find($id);
+        return response()->json([
+            'data' => $categories
+        ]);
+
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

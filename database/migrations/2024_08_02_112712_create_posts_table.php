@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('meta_title',50);
             $table->string('meta_description',50);
             $table->timestamps();
-            $table->softDeletes();
+            $table->softDeletes('deleted_at');
 
             // // Tambahkan foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

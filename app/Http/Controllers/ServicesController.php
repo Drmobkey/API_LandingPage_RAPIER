@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Post\StorePostRequest;
-use App\Http\Requests\Post\UpdatePostRequest;
-use App\Models\Posts;
+use App\Http\Requests\Services\ServicesStoreRequest;
+use App\Http\Requests\Services\ServicesUpdateRequest;
+use App\Models\Services;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AdminPostController extends Controller
+class ServicesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $post = Posts::withTrashed()->get();
+        $services = Services::withTrashed()->get();
         return response()->json([
-            'data' => $post
+            'data'=> $services
         ]);
     }
 
@@ -33,14 +32,14 @@ class AdminPostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(ServicesStoreRequest $request)
     {
-        //
+     
         try {
-            $post = Posts::create($request->validated());
+            $services = Services::create($request->validated());
 
             return response()->json([
-                'data' => $post,
+                'data' => $services,
                 'message' => 'Data berhasil dibuat',
             ], 201);
         } catch (\Exception $e) {
@@ -55,11 +54,11 @@ class AdminPostController extends Controller
      */
     public function show(string $id)
     {
-        //
-        $post = Posts::find($id);
+        $services = Services::find($id);
         return response()->json([
-            'data' => $post
+            'data' => $services
         ]);
+
     }
 
     /**
@@ -68,28 +67,29 @@ class AdminPostController extends Controller
     public function edit(string $id)
     {
         //
-
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, string $id)
+    public function update(ServicesUpdateRequest $request, string $id)
     {
         //
         try {
-            $post = Posts::withTrashed()->findOrFail($id);
-            $post->update($request->validated());
+            $services = Services::withTrashed()->findOrFail($id);
+            $services->update($request->validated());
 
             return response()->json([
-                'data' => $post,
-                'message' => 'Data berhasil diperbarui'
+                'data' => $services,
+                'message' => 'Services berhasil diperbarui'
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage(),
             ], 500);
         }
+
+
     }
 
     /**
@@ -97,53 +97,53 @@ class AdminPostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
         try {
-            $post = Posts::findOrFail($id);
-            if (!$post) {
+            $services = Services::findOrFail($id);
+            if (!$services) {
                 return response()->json([
                     'message' => 'Data tidak ditemukan'
                 ], 404);
             }
 
-            $post->delete();
-            return response()->json(['message' => 'Data berhasil dihapus secara soft'], 204);
+            $services->delete();
+            return response()->json(['message' => 'Services berhasil dihapus secara soft'], 204);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage(),
             ], 500);
         }
+        //
     }
 
     public function restore(string $id)
-    {
-        try {
-            $post = Posts::withTrashed()->findOrFail($id);
-            $post->restore();
+{
+    try {
+        $services = Services::withTrashed()->findOrFail($id);
+        $services->restore();
 
-            return response()->json([
-                'data' => $post,
-                'message' => 'Services berhasil direstorasi'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat merestorasi data: ' . $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'data' => $services,
+            'message' => 'Services berhasil direstorasi'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Terjadi kesalahan saat merestorasi data: ' . $e->getMessage(),
+        ], 500);
     }
+}
 
-    public function forceDelete(string $id)
-    {
-        try {
-            $post = Posts::withTrashed()->findOrFail($id);
-            $post->forceDelete();
+public function forceDelete(string $id)
+{
+    try {
+        $services = Services::withTrashed()->findOrFail($id);
+        $services->forceDelete();
 
-            return response()->json(['message' => 'Services berhasil dihapus secara permanen'], 204);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat menghapus data secara permanen: ' . $e->getMessage(),
-            ], 500);
-        }
+        return response()->json(['message' => 'Services berhasil dihapus secara permanen'], 204);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Terjadi kesalahan saat menghapus data secara permanen: ' . $e->getMessage(),
+        ], 500);
     }
+}
 
 }

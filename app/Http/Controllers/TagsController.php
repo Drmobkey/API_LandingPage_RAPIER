@@ -10,6 +10,25 @@ use Illuminate\Support\Facades\Validator;
 class TagsController extends Controller
 {
     //
+
+    public function index()
+    {
+       $tags = Tags::all();
+        return response()->json([
+            'data'=>$tags
+        ]);
+    }
+    
+    
+    public function show(string $id)
+    {
+       $tags = Tags::find($id);
+        return response()->json([
+            'data' =>$tags
+        ]);
+
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -24,7 +43,7 @@ class TagsController extends Controller
         }
 
         $tags = Tags::create($request->all());
-        return response()->json(['message' => 'Kategori berhasil dibuat', 'kategori' => $tags], 201);
+        return response()->json(['message' => 'Tags berhasil dibuat', 'tags' => $tags], 201);
     }
 
     public function update(Request $request, $id)
@@ -43,7 +62,7 @@ class TagsController extends Controller
         }
 
         $tags->update($request->all());
-        return response()->json(['message' => 'Data berhasil diperbarui', 'data' => $tags]);
+        return response()->json(['message' => 'Tags berhasil diperbarui', 'data' => $tags]);
 
     }
 }

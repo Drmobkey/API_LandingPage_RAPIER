@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Posts extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = 'posts';
     protected $fillable = [
         'title',
@@ -21,6 +22,7 @@ class Posts extends Model
         'meta_title',
         'meta_description'
     ];
+    protected $dates = ['deleted_at'];
 
     public function category()
     {
